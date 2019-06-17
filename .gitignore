@@ -1,0 +1,9 @@
+RACMO_Analysis/*
+Data/*
+Archive/*
+docs/*
+from_Eliza/*
+Previous_Versions/*
+
+*.png
+
