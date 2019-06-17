@@ -7,3 +7,5 @@ Previous_Versions/*
 
 *.png
 *.m~
+
+preprocessing/*.mat
