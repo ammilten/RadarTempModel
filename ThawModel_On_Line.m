@@ -2,10 +2,10 @@ clear; close all
 %% Path Setup
 
 % Name of results folder to be created 
-saveFolderName = 'ThawModelResults3';
+saveFolderName = '/home/ammilten/ThawModelResults3';
 
 % Where TempModelData.mat and FullProcessedData.mat are stored
-base = '/home/ammilten/Documents/Stanford/Second Project/Attenuation Model/Data/Vostok Radar Line/';
+base = 'preprocessing/';
 
 %% Sampling Setup
 nsamples = 1000;
