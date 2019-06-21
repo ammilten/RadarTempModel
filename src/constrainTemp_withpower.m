@@ -47,7 +47,10 @@ ratio = [];
 while accepted < N*(1+burnin)
     %Generate sample and data
     sample2 = samplePrior(prior,1);
+    
     sample = newsample(sample_old{1},sample2{1}, theta);
+    %sample = newsample2(sample_old{1},sample2{1}, theta);
+    
     switch option
         case 'FixedTb'
             [temp, attn] = genProfiles_fixedTb(dz, thx, sample);
