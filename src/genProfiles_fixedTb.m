@@ -1,4 +1,4 @@
-function [tempProfile, attnProfile] = genProfiles_fixedTb(dz,thx,params)
+function [tempProfile, attnProfile, trace] = genProfiles_fixedTb(dz,thx,params)
 % params:
 %     thermalCond
 %     iceThickness
@@ -32,3 +32,4 @@ z = 0:dz:iceThickness;
 tempProfile = temperature_fixedTb(z, diffusivity, iceThickness, accumulationRate, surfaceTemp, bottomTemp);
 %tempProfile = temperature(z, diffusivity, thermalCond, iceThickness, accumulationRate, geoHeatFlux, surfaceTemp, false);
 attnProfile = attenuation(tempProfile, sig, E, C, Const, K, referenceTemp);
+
