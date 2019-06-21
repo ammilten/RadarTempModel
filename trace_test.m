@@ -14,12 +14,12 @@ run('prioruncertainty_vostok.m')
 
 %% Trace properties
 
-thx = 4807; %m
-attn1way = 9.3982; %dB/km
-Pb = -77; %dB
-Ps = -60; %dB
+thx = 3131; %m
+attn1way = 13.7003; %dB/km
+Pb = -73.9793; %dB
+Ps = -67.0980; %dB
 Hs = 1000; %m
-Hf = 2854; %m
+Hf = 2.1926e3; %m
 
 %% Sampling
 disp('Starting trace')
@@ -62,7 +62,7 @@ hold off
 xlabel('Temperature (C)')
 ylabel('Height Above Bed (m)')
 title('Temperature Profiles')
-ylim([0,4200])
+ylim([0,thx])
 
 % Plot attenuation curves
 subplot(1,2,2)
@@ -83,4 +83,4 @@ hold off
 xlabel('Attenuation Rate (dB/km)')
 ylabel('Height Above Bed (m)')
 title('Attenuation Profiles')
-ylim([0,4200])
+ylim([0,thx])
