@@ -1,3 +1,3 @@
-function saveresults(name, p,posterior_params)
+function saveresults(name, p,posterior_params,time)
 
-save(name, 'p','posterior_params')
+save(name, 'p','posterior_params','time')
