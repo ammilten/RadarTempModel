@@ -2,7 +2,7 @@ RACMO_Analysis/*
 Data/*
 Archive/*
 docs/*
-from_Eliza/*
+From_Eliza/*
 Previous_Versions/*
 
 *.png
