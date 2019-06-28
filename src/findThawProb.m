@@ -1,4 +1,4 @@
-function [Ps, tempPosterior, attnPosterior, postParams, ratio] = findThawProb(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, theta, option)
+function [Ps, tempPosterior, attnPosterior, postParams, ratio] = findThawProb(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, theta, option,varargin)
 % Variables:
 %     attn:     measured attenuation rate of upper portion
 %     He:       measured height

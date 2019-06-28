@@ -1,4 +1,4 @@
-function ThawModelOnLine(r,saveFolderName)
+function ThawModelOnLine(r,saveFolderName,varargin)
 %% Sampling Setup
 
 nsamples = 1000;
@@ -23,7 +23,7 @@ full = [base, 'FullProcessedData.mat'];
 load(data)
 
 %% Creating results folder
-dest = [base, saveFolderName];
+dest = saveFolderName;
 mkdir(dest)
 copyfile(data,[dest,'/inputs.mat'])
 copyfile(full,[dest,'/full.mat'])
@@ -39,7 +39,7 @@ parfor i = 1:length(Thx{r})
     if val==2
         [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb');
     else
-        [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb');
+        [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb',1);
     end
     time = toc;
     
