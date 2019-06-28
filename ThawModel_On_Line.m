@@ -32,7 +32,10 @@ mkdir(subdest);
 parfor i = 1:length(Thx{r})
     
     tic
-    [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz,'FixedTb');
+        [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, 0.2,'FixedTb');
+ %  [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz,'FixedTb');
+
+    
     time = toc;
     
     saveresults([subdest,'/trace',num2str(i),'.mat'],p,posterior_params,time)
