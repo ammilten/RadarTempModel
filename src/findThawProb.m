@@ -1,4 +1,4 @@
-function [Ps, tempPosterior, attnPosterior, postParams] = findThawProb(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, option)
+function [Ps, tempPosterior, attnPosterior, postParams, ratio] = findThawProb(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, theta, option,varargin)
 % Variables:
 %     attn:     measured attenuation rate of upper portion
 %     He:       measured height
@@ -20,9 +20,15 @@ function [Ps, tempPosterior, attnPosterior, postParams] = findThawProb(attn, Bob
 % run('prioruncertainty.m')
 
     
+if isempty(varargin)
+    disp('Using Frozen/Thawed DeltaR')
+    [tempPosterior, attnPosterior, postParams, ratio] = constrainTemp_withpower(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, theta, option);
+else
+    disp('Using Single DeltaR')
+    [tempPosterior, attnPosterior, postParams, ratio] = mcmc2(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, theta, option);
+end
 %[tempPrior, attnPrior] = priorProfiles(prior, N, dz, option);
 %[tempPosterior, attnPosterior] = constrainTemp_mcmc(attn, P, Hs, He, prior, N, sigObsN, sigObsP, dz, option);
-[tempPosterior, attnPosterior, postParams] = constrainTemp_withpower(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, option);
 
 Ps = sum(tempPosterior(1,:) >= 0) / N;
 

@@ -1,15 +1,16 @@
 %% Setup
 
-r = 1;
-tr = 1100;
+r = 2;
+tr = 1260;
 
 nsamples = 1000;
 sigObsN = 1;
 sigObsB = 5;
 dz = 1;
+theta = 0.2;
 
 showDistributions = true;
-showUncertainties = false;
+showUncertainties = true;
 showAnimation = false;
 
 %% Paths and loading data
@@ -22,12 +23,18 @@ addpath(genpath('src'))
 disp('----------------')
 disp('Summary')
 disp('----------------')
+disp(['Attenuation Measurement Error Standard Deviation: ',num2str(sigObsN),' dB/km'])
+disp(['Bed Echo Power Measurement Error Standard Deviation: ',num2str(sigObsB),' dB'])
+disp([num2str(nsamples),' samples'])
+disp(['theta = ',num2str(theta)])
+disp(' ')
 disp(['Ice Thickness: ',num2str(Thx{r}(tr)),' meters'])
 disp(['Start Height: ',num2str(Hs{r}(tr)),' meters below surface'])
 disp(['End Height: ',num2str(He{r}(tr)),' meters below surface'])
 disp(['Start Power: ',num2str(Ps{r}(tr)),' meters'])
 disp(['Bed Echo Power: ',num2str(Pb{r}(tr)),' dB'])
 disp(['1-Way Attenuation: ',num2str(N{r}(tr)),' dB/km'])
+
 
 %% Sampling posterior
 addpath('/home/ammilten/Documents/Stanford/Second Project/Attenuation Model')
@@ -40,7 +47,9 @@ run('prioruncertainty_vostok.m')
 tic
 disp('--------------------')
 disp('Starting Trace')
-[p,T,A,post] = findThawProb(N{r}(tr), Pb{r}(tr), Ps{r}(tr), Hs{r}(tr), He{r}(tr), Thx{r}(tr), prior, nsamples, sigObsN, sigObsB, dz,'FixedTb');
+[p,T,A,post,diagnostic] = findThawProb(...
+    N{r}(tr), Pb{r}(tr), Ps{r}(tr), Hs{r}(tr), He{r}(tr), Thx{r}(tr),...
+    prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb',1);
 p
 t = toc;
 disp(['Finished Trace (',num2str(t),' seconds)'])

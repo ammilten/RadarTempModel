@@ -1,4 +1,4 @@
-function [tempSamples, attnSamples, postParams] = constrainTemp_withpower(N_obs, B_obs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsB, dz, option)
+function [tempSamples, attnSamples, postParams, ratio] = constrainTemp_withpower(N_obs, B_obs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsB, dz, theta, option)
 % Nobs:     observed one-way attenuation rate
 % Bobs:     observed bed echo power
 % Ps:       power at H=Hs for normalizing corrected bed echo power
@@ -14,7 +14,10 @@ burnin = 0.2;
 
 Delta_obs = B_obs - Ps;
 
-theta = .2;
+%theta = .2;
+
+wfr = 1 / (prior.Rfr.Upper - prior.Rfr.Lower);
+wth = 1 / (prior.Rth.Upper - prior.Rth.Lower);
 
 z = 0:dz:thx;
 [~,ne] = min(abs(thx - He - z));
@@ -36,12 +39,27 @@ switch option
         [temp1, attn1] = genProfiles(dz, thx, sample_old{1});
 end
 N_m = mean(attn1(ne:ns));
-Delta_m= bedPwr(attn1(1:ns), temp1, thx-Hs, sample_old{1}.Rfr, sample_old{1}.Rth);
+
+%-------------- Pressure melting goes here ----------------
+ThawTemp = 0;
+%----------------------------------------------------------
+
+if temp1(1) >= ThawTemp
+    R = sample_old{1}.Rth;
+    w = wth;
+else
+    R = sample_old{1}.Rfr;
+    w = wfr;
+end
+Delta_m= bedPwr(attn1(1:ns), thx-Hs, R);
 
 pAttn1 = normpdf(N_m, N_obs, sigObsN);
 pPwr1 = normpdf(Delta_m, Delta_obs, sigObsB);
 
-prob_old = pAttn1*pPwr1;
+%prob_old = pAttn1 * pPwr1 * w;
+prob_old = pAttn1 * pPwr1;
+
+
 
 ratio = [];
 while accepted < N*(1+burnin)
@@ -60,14 +78,27 @@ while accepted < N*(1+burnin)
     
     %Compute theoretical attenuation rate from sampled data
     N_m = mean(attn(ne:ns));
-    Delta_m = bedPwr(attn(1:ns), temp, thx-Hs, sample.Rfr, sample.Rth);
+    
+    %-------------- Pressure melting goes here ----------------
+    ThawTemp = 0;
+    %----------------------------------------------------------
+    
+    if temp(1) >= ThawTemp
+        R = sample.Rth;
+        w = wth;
+    else
+        R = sample.Rfr;
+        w = wfr;
+    end
+    Delta_m = bedPwr(attn(1:ns), thx-Hs, R);
     
     %Accept/reject criteria
     u = rand();
     pAttn = normpdf(N_m, N_obs, sigObsN);
     pPwr = normpdf(Delta_m, Delta_obs, sigObsB);
-    prob = pAttn * pPwr; % Power and Attenuation
-    %prob = pAttn;%Just attenuation
+    
+%    prob = pAttn * pPwr * w;
+    prob = pAttn * pPwr;
     
     alpha = prob/prob_old;
     if u < alpha
