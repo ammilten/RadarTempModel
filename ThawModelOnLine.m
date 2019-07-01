@@ -37,7 +37,7 @@ parfor i = 1:length(Thx{r})
     
     f = [subdest,'/trace',num2str(i),'.mat'];
     
-    if exist(f, 'file') ~= 0
+    if exist(f, 'file') == 0
         tic
         if val==2
             [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb');
