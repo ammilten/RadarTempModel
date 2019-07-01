@@ -35,16 +35,22 @@ val = nargin;
 %% Main Loop
 parfor i = 1:length(Thx{r})
     
-    tic
-    if val==2
-        [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb');
-    else
-        [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb',1);
-    end
-    time = toc;
+    f = [subdest,'/trace',num2str(i),'.mat'];
     
-    saveresults([subdest,'/trace',num2str(i),'.mat'],p,posterior_params,time)
-    disp(['Time for trace ',num2str(i),': ',num2str(time),' seconds'])
+    if exist(f, 'file') ~= 0
+        tic
+        if val==2
+            [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb');
+        else
+            [p,T,A,posterior_params] = findThawProb(N{r}(i), Pb{r}(i), Ps{r}(i), Hs{r}(i), He{r}(i), Thx{r}(i), prior, nsamples, sigObsN, sigObsB, dz, theta, 'FixedTb',1);
+        end
+        time = toc;
+
+        saveresults(f,p,posterior_params,time)
+        disp(['Time for trace ',num2str(i),': ',num2str(time),' seconds'])
+    else
+        disp(['Trace ',num2str(i),' already exists'])
+    end
     
 end
 
