@@ -37,8 +37,8 @@ disp(['1-Way Attenuation: ',num2str(N{r}(tr)),' dB/km'])
 
 
 %% Sampling posterior
-addpath('/home/ammilten/Documents/Stanford/Second Project/Attenuation Model')
-addpath('/home/ammilten/Documents/Stanford/Second Project/Attenuation Model/Archive')
+% addpath('/home/ammilten/Documents/Stanford/Second Project/Attenuation Model')
+% addpath('/home/ammilten/Documents/Stanford/Second Project/Attenuation Model/Archive')
 
 
 
