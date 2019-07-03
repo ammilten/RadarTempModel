@@ -1,4 +1,6 @@
 function [tempSamples, attnSamples, postParams, ratio] = mcmc2(N_obs, B_obs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsB, dz, theta, option)
+% Different than constrainTemp_withpower in that it only considers 1 Delta
+% R value, i.e. Rth and Rfr are the same.
 % Nobs:     observed one-way attenuation rate
 % Bobs:     observed bed echo power
 % Ps:       power at H=Hs for normalizing corrected bed echo power

@@ -32,6 +32,12 @@ subdest = [dest,'/radargram',num2str(r)];
 mkdir(subdest);
 
 val = nargin;
+if val == 2
+    disp('using two delta r')
+else
+    disp('using one delta r')
+end
+
 %% Main Loop
 parfor i = 1:length(Thx{r})
     

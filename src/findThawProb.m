@@ -20,6 +20,7 @@ function [Ps, tempPosterior, attnPosterior, postParams, ratio] = findThawProb(at
 % run('prioruncertainty.m')
 
     
+% If no extra arguments, use {Rfr, Rth}, if not use {Rfr=Rth}
 if nargin==13
     %disp('Using Frozen/Thawed DeltaR')
     [tempPosterior, attnPosterior, postParams, ratio] = constrainTemp_withpower(attn, Bobs, Ps, Hs, He, thx, prior, N, sigObsN, sigObsP, dz, theta, option);
